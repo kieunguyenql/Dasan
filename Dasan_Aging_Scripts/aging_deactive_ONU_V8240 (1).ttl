@@ -1,0 +1,65 @@
+timeout = 10
+connect '10.72.210.32:23 /telnet'
+wait 'login:'
+sendln 'admin'
+wait 'Password:'
+sendln ''
+
+; Saving log in specific file
+getdir mdir
+foldercreate 'D:\Logs\'
+sprintf2 filename 'D:\Logs\Check_deactive_H646GMV_17.log'
+logopen filename 0 0
+pause 1
+logstart
+
+; Start
+wait '>'
+sendln 'enable'
+wait '#'
+sendln 'terminal length 0'
+wait '#'
+sendln 'con t'
+wait '#'
+sendln 'exe 0'
+wait '#'
+sendln 'gpon'
+wait '#'
+sendln 'gp 3/1'
+wait '#'
+sendln 'olt auto-to-manual enable'
+
+i=1
+while 1
+int2str s i
+sendln '!!!!!!!!!!!!!!!!!! no ' s ' !!!!!!!!!!!!!!!!!!!!!!'
+wait '#'
+sendln 'do show clock'
+wait '#'
+pause 2
+sendln 'show onu active 8'
+wait '#'
+pause 2
+sendln 'show onu info 8'
+wait '#'
+pause 2
+sendln 'show onu detail-info 8'
+wait '#'
+pause 2
+sendln 'show onu system-status 8'
+wait '#'
+pause 2
+sendln 'show olt statistics alarm 8'
+wait '#'
+pause 2
+sendln 'show onu ip-host 8'
+wait '#'
+pause 2
+sendln 'onu deactivate 8'
+wait '#'
+pause 100
+i=i+1
+endwhile
+
+
+

@@ -1,0 +1,32 @@
+getenv 'USERNAME' username
+gettime timestr "%Y%m%d-%H%M%S"
+getdir mdir
+foldercreate 'C:\02_ONTAGING'
+sprintf2 filename 'C:\02_ONTAGING\console_%s_%s.log' param2 timestr
+logopen filename 0 0
+pause 1
+logstart
+pause 1
+wait '#'
+sendln '@start-shell'
+wait '#'
+sendln 'cat /proc/modules'
+wait '#'
+sendln 'cat /tmp/var/romfile.cfg'
+wait '#'
+sendln 'cat /data/log/messages.2'
+wait '#'
+sendln 'cat /data/log/messages.1'
+wait '#'
+sendln 'cat /data/log/messages.0'
+wait '#'
+sendln 'cat /data/log/messages'
+wait '#'
+sendln 'cat /data/log/signal.log'
+wait '#'
+sendln 'rm /data/log/*'
+wait '#'
+pause 12
+sendln'exit'
+logclose
+closett

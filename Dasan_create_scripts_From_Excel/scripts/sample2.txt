@@ -1,0 +1,25 @@
+sprintf2 var "%s:23 /nossh /T=1" param2 
+connect var
+wait 'login:'
+sendln 'admin'
+wait 'Password:'
+sendln '123456'
+getenv 'USERNAME' username
+gettime timestr "%Y%m%d-%H%M%S"
+getdir mdir
+foldercreate 'C:\02_NOS_DOWNLOAD'
+sprintf2 filename 'C:\02_NOS_DOWNLOAD\console_%s_%s.log' param2 timestr
+logopen filename 0 0
+pause 1
+logstart
+pause 1
+sendln 'enable'
+wait '#'
+timeout = 10
+sendln ''
+wait '#'
+sendln 'enable'
+wait '#'
+sendln 'configure terminal'
+wait '#'
+sendln 'gpon'

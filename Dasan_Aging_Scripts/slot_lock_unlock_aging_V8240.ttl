@@ -1,0 +1,48 @@
+; *******************************************************
+; *   OMCC Aging testing for slot 2/1 (no-add onuprofile)
+; *******************************************************
+; Login to OLT
+timeout = 10
+connect '10.72.210.32:23 /telnet'
+wait 'login:'
+sendln 'admin'
+wait 'Password:'
+sendln ''
+
+; Saving log in specific file
+getdir mdir
+foldercreate 'D:\Aging_OLT\'
+sprintf2 filename 'D:\Aging_OLT\Check_slot_unlock_lock.log'
+logopen filename 0 0
+pause 1
+logstart
+
+; Start
+wait '>'
+sendln 'enable'
+wait '#'
+sendln 'terminal length 0'
+wait '#'
+sendln 'con t'
+wait '#'
+sendln 'exe 0'
+wait '#'
+sendln 'end'
+wait '#'
+sendln 'con t'
+wait '#'
+
+while 1
+sendln 'show onu active count 3/1'
+wait '#'
+pause 3
+sendln 'slot lock siu 3'
+wait '#'
+pause 5
+sendln 'show onu active count 3/1'
+pause 3
+sendln 'slot unlock siu 3'
+pause 200
+endwhile
+
+

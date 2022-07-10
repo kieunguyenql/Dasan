@@ -1,0 +1,67 @@
+timeout = 10
+connect '10.72.210.32:23 /telnet'
+wait 'login:'
+sendln 'admin'
+wait 'Password:'
+sendln ''
+
+; Saving log in specific file
+getdir mdir
+foldercreate 'D:\Logs\'
+sprintf2 filename 'D:\Logs\Check_aging_no_add_ONU_H646GMV.log'
+logopen filename 0 0
+pause 1
+logstart
+
+; Start
+wait '>'
+sendln 'enable'
+wait '#'
+sendln 'terminal length 0'
+wait '#'
+sendln 'con t'
+wait '#'
+sendln 'exe 0'
+wait '#'
+sendln 'gpon'
+wait '#'
+sendln 'gp 3/1'
+wait '#'
+sendln 'olt auto-to-manual enable'
+
+i=1
+while 1
+int2str s i
+sendln '!!!!!!!!!!!!!!!!!! no ' s ' !!!!!!!!!!!!!!!!!!!!!!'
+wait '#'
+sendln 'do show clock'
+wait '#'
+pause 2
+sendln 'show onu active 10'
+wait '#'
+pause 2
+sendln 'show onu info 10'
+wait '#'
+pause 2
+sendln 'show onu detail-info 10'
+wait '#'
+pause 2
+sendln 'show onu system-status 10'
+wait '#'
+pause 2
+sendln 'show olt statistics alarm 10'
+wait '#'
+pause 2
+sendln 'show onu ip-host 10'
+wait '#'
+sendln 'no onu 10'
+wait '#'
+pause 20
+sendln 'onu-profile 10 H2M1V1_Viettel'
+wait '#'
+pause 10
+sendln 'onu pppoe 10 host 2 user-account dasan 123456'
+wait '#'
+pause 90
+i=i+1
+endwhile

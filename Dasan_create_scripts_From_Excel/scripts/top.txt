@@ -1,0 +1,5 @@
+sprintf2 var "%s:23 /nossh /T=1" param2 
+connect var
+wait 'login:'
+sendln 'admin'
+wait 'Password:'
